@@ -1,9 +1,9 @@
-# Build tools (help avoid legacy wheel issues)
+# Upgrade tools
 pip>=25.2
-setuptools>=75.0.0
+setuptools>=75.1.0
 wheel>=0.44.0
 
-# Core bot frameworks
+# Main bot frameworks
 aiogram==2.25.1
 Flask==2.3.3
 python-dotenv==1.0.1
@@ -14,11 +14,10 @@ Pillow==10.2.0
 pyrogram==2.0.106
 tgcrypto==1.2.5
 
-# Fuzzy matching (no C-build hassles)
-fuzzywuzzy==0.18.0
+# String similarity (avoid fuzzywuzzy build issues)
 rapidfuzz==3.6.2
 
-# aiohttp stack pinned for Aiogram v2 + Python 3.11
+# Dependencies for aiohttp (for aiogram)
 aiohttp==3.8.6
 async-timeout==4.0.3
 attrs==23.2.0
