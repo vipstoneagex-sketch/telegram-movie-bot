@@ -1,11 +1,16 @@
-import logging
+from aiogram import Bot, Dispatcher, executor
 import os
+from app.handlers import start, admin, user_search
 
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+TOKEN = os.getenv("BOT_TOKEN")
 
-logging.basicConfig(
-    level=getattr(logging, LOG_LEVEL, logging.INFO),
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-)
+bot = Bot(token=TOKEN)
+dp = Dispatcher(bot)
 
-logger = logging.getLogger("movie_bot")
+# Register handlers
+start.register(dp)
+admin.register(dp)
+user_search.register(dp)
+
+def run_bot():
+    executor.start_polling(dp, skip_updates=True)
