@@ -1,32 +1,13 @@
-# Upgrade tools
-pip>=25.2
-setuptools>=75.1.0
-wheel>=0.44.0
+--only-binary=:all:
+pip==25.1.1
+setuptools==75.1.0
+wheel==0.44.0
 
-# Main bot frameworks
 aiogram==2.25.1
 Flask==2.3.3
 python-dotenv==1.0.1
 requests==2.31.0
-Pillow==10.2.0
-
-# Telegram / MTProto
+Pillow==10.3.0
 pyrogram==2.0.106
 tgcrypto==1.2.5
-
-# String similarity (avoid fuzzywuzzy build issues)
 rapidfuzz==3.6.2
-
-# Dependencies for aiohttp (for aiogram)
-aiohttp==3.8.6
-async-timeout==4.0.3
-attrs==23.2.0
-frozenlist==1.4.1
-multidict==6.0.4
-yarl==1.9.4
-idna==3.7
-charset-normalizer==3.3.2
-certifi==2024.2.2
-Babel==2.14.0
-typing-extensions==4.11.0
-pytz==2024.1
