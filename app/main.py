@@ -1,11 +1,22 @@
+from flask import Flask
+import threading
 import logging
-import os
+from app.bot import run_bot
 
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+# Initialize Flask app for Render health check
+app = Flask(__name__)
 
-logging.basicConfig(
-    level=getattr(logging, LOG_LEVEL, logging.INFO),
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-)
+@app.route('/')
+def home():
+    return "Bot is running!", 200
 
-logger = logging.getLogger("movie_bot")
+def start_bot():
+    run_bot()
+
+if __name__ == "__main__":
+    logging.info("Starting Flask and bot threads...")
+    # Start bot in a separate thread
+    t = threading.Thread(target=start_bot)
+    t.start()
+    # Run Flask app to keep service alive
+    app.run(host="0.0.0.0", port=5000)
