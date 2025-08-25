@@ -1,16 +1,11 @@
-from pyrogram import Client
-from app.config import API_ID, API_HASH, BOT_TOKEN
-from app.handlers import start, admin, user_search, callbacks, errors
+import logging
+import os
 
-app = Client("movie_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
-# Register handlers
-start.register(app)
-admin.register(app)
-user_search.register(app)
-callbacks.register(app)
-errors.register(app)
+logging.basicConfig(
+    level=getattr(logging, LOG_LEVEL, logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
 
-if __name__ == "__main__":
-    print("Bot is starting...")
-    app.run()
+logger = logging.getLogger("movie_bot")
