@@ -12,8 +12,8 @@ yarl==1.9.4
 
 pyrogram==2.0.106
 tgcrypto==1.2.5
-fuzzywuzzy[speedup]==0.18.0
-python-Levenshtein==0.21.0
+fuzzywuzzy==0.18.0
+rapidfuzz==3.6.2
 Pillow==10.2.0
 Flask==2.3.3
 python-dotenv==1.0.0
