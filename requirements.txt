@@ -3,7 +3,7 @@ tgcrypto
 fuzzywuzzy[speedup]
 python-Levenshtein
 pillow
-aiogram==2.25.1
+aiogram
 Flask==2.3.3
 python-dotenv==1.0.0
 requests==2.31.0
