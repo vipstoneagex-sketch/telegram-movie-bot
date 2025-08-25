@@ -1,20 +1,33 @@
+# Build tools (help avoid legacy wheel issues)
+pip>=25.2
+setuptools>=75.0.0
+wheel>=0.44.0
+
+# Core bot frameworks
 aiogram==2.25.1
+Flask==2.3.3
+python-dotenv==1.0.1
+requests==2.31.0
+Pillow==10.2.0
+
+# Telegram / MTProto
+pyrogram==2.0.106
+tgcrypto==1.2.5
+
+# Fuzzy matching (no C-build hassles)
+fuzzywuzzy==0.18.0
+rapidfuzz==3.6.2
+
+# aiohttp stack pinned for Aiogram v2 + Python 3.11
 aiohttp==3.8.6
 async-timeout==4.0.3
 attrs==23.2.0
-Babel==2.14.0
-certifi==2024.2.2
-charset-normalizer==3.3.2
 frozenlist==1.4.1
-idna==3.7
 multidict==6.0.4
 yarl==1.9.4
-
-pyrogram==2.0.106
-tgcrypto==1.2.5
-fuzzywuzzy==0.18.0
-rapidfuzz==3.6.2
-Pillow==10.2.0
-Flask==2.3.3
-python-dotenv==1.0.0
-requests==2.31.0
+idna==3.7
+charset-normalizer==3.3.2
+certifi==2024.2.2
+Babel==2.14.0
+typing-extensions==4.11.0
+pytz==2024.1
