@@ -1,0 +1,7 @@
+pyrogram==2.0.106
+tgcrypto
+requests
+fuzzywuzzy[speedup]
+python-Levenshtein
+pillow
+python-dotenv
