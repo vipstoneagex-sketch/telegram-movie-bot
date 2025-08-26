@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: telegram-bot
+    name: telegram-movie-bot
     env: python
     plan: free
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-    startCommand: python main.py
+    startCommand: python -m app.main
     envVars:
       - key: PYTHON_VERSION
-        value: python-3.10.13
+        value: 3.12.0
