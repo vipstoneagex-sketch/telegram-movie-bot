@@ -1,10 +1,7 @@
-aiohttp==3.8.6
-aiogram==2.25.1
 pyrogram==2.0.106
 tgcrypto==1.2.3
-fuzzywuzzy[speedup]==0.18.0
-python-Levenshtein==0.20.9
-pillow==9.5.0
-Flask==2.3.3
+rapidfuzz==3.5.2
 python-dotenv==1.0.0
 requests==2.31.0
+Flask==3.0.0
+Werkzeug==3.0.1
