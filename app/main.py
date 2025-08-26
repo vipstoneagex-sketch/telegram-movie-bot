@@ -3,8 +3,9 @@ import threading
 import logging
 import asyncio
 import time
+import signal
 from flask import Flask, jsonify
-from pyrogram import Client
+from pyrogram import Client, idle
 from app.config import API_ID, API_HASH, BOT_TOKEN, ADMIN_ID
 from app.db.queries import init_db
 from app.handlers import start, admin, user_search, callbacks, errors
@@ -83,8 +84,14 @@ async def run_bot():
                 bot_status["error"] = None
                 logger.info("Bot started successfully!")
                 
-                # Keep the bot running
-                await bot_app.idle()
+                # Keep the bot running using pyrogram's idle function
+                try:
+                    await idle()
+                except Exception as idle_error:
+                    logger.warning(f"idle() not available, using manual loop: {idle_error}")
+                    # Fallback: manual keep-alive loop
+                    while bot_status["running"]:
+                        await asyncio.sleep(1)
             else:
                 logger.error("Failed to create bot instance")
                 bot_status["error"] = "Failed to create bot instance"
