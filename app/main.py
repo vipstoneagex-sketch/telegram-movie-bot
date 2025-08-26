@@ -1,6 +1,7 @@
 import os
 import threading
 import logging
+import asyncio
 from flask import Flask
 from pyrogram import Client
 from app.config import API_ID, API_HASH, BOT_TOKEN
@@ -26,7 +27,7 @@ def create_bot():
         api_id=API_ID,
         api_hash=API_HASH,
         bot_token=BOT_TOKEN,
-        workdir="."
+        workdir="/tmp"  # Use /tmp on Render
     )
     
     # Register all handlers
@@ -38,21 +39,39 @@ def create_bot():
     
     return bot_app
 
-def start_bot():
-    """Initialize database and start the bot"""
+def start_flask():
+    """Start Flask server in a separate thread"""
+    port = int(os.environ.get("PORT", 5000))
+    logger.info(f"Starting Flask server on port {port}")
+    app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
+
+async def main():
+    """Main async function to run the bot"""
     try:
         # Initialize database
         init_db()
         logger.info("Database initialized successfully")
         
-        # Create and start bot
+        # Start Flask in a separate thread
+        flask_thread = threading.Thread(target=start_flask, daemon=True)
+        flask_thread.start()
+        
+        # Create and start bot in main thread
         bot_app = create_bot()
         logger.info("Starting Telegram bot...")
-        bot_app.run()
+        await bot_app.start()
+        logger.info("Bot started successfully!")
+        
+        # Keep the bot running
+        await bot_app.idle()
         
     except Exception as e:
         logger.error(f"Failed to start bot: {e}")
         raise
+    finally:
+        if 'bot_app' in locals():
+            await bot_app.stop()
+            logger.info("Bot stopped")
 
 if __name__ == "__main__":
     # Validate required environment variables
@@ -62,11 +81,11 @@ if __name__ == "__main__":
     
     logger.info("Starting application...")
     
-    # Start bot in a separate thread
-    bot_thread = threading.Thread(target=start_bot, daemon=True)
-    bot_thread.start()
-    
-    # Start Flask app to keep Render service alive
-    port = int(os.environ.get("PORT", 5000))
-    logger.info(f"Starting Flask server on port {port}")
-    app.run(host="0.0.0.0", port=port, debug=False)
+    # Run the main async function
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("Application stopped by user")
+    except Exception as e:
+        logger.error(f"Application error: {e}")
+        exit(1)
